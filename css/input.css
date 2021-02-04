@@ -1,0 +1,12 @@
+#preview img {
+  width: 200px;
+  margin: 10px;
+  border: solid 1px silver;
+}
+
+label {
+  color: white;  
+  background-color: red;
+  padding: 6px;
+  border-radius: 12px;
+}

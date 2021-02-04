@@ -1,0 +1,18 @@
+.formbox{
+display: flex;
+justify-content: center;
+flex-direction: column;
+margin-top: 10rem;
+}
+
+html{
+    height: 100vh;
+}
+
+body{
+    height: 100%;
+}
+
+form{
+    height: 100%;
+}
