@@ -8,10 +8,12 @@ include('functions.php');
 $user_id = $_GET['user_id'];
 $article_id = $_GET['article_id'];
 
+// var_dump($_GET);
+// exit();
+
 $pdo = connect_to_db();
 
-$sql = 'SELECT * FROM article_table LEFT OUTER JOIN (SELECT article_id, COUNT(user_id) AS cnt FROM like_table GROUP BY article_id) AS likes
-ON article_table.article_id = likes.article_id';
+$sql = 'SELECT COUNT(*)FROM like_table WHERE user_id=:user_id AND article_id=:article_id';
 // $sql = 'INSERT INTO like_table(like_id, user_id, article_id, created_at)VALUES(NULL, :user_id, :article_id, sysdate())'; // SQL作成
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);

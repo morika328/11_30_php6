@@ -14,7 +14,7 @@ $user_id = $_SESSION['user_id'];
 
 // データ取得SQL作成
 // $sql = 'SELECT * FROM todo_table'; // <- select文を変更
-$sql = 'SELECT * FROM article_table';
+$sql = 'SELECT article_table.article_id,article,image,cnt FROM article_table LEFT OUTER JOIN (SELECT article_id, COUNT(user_id) AS cnt FROM like_table GROUP BY article_id) AS likes ON article_table.article_id = likes.article_id';
 $stmt = $pdo->prepare($sql);
 $status = $stmt->execute();
 
@@ -29,6 +29,8 @@ if ($status == false) {
   // fetchAll()関数でSQLで取得したレコードを配列で取得できる
   $result = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
   $output = "";
+  // var_dump($result);
+  // exit();6
 
   
 
@@ -37,9 +39,9 @@ if ($status == false) {
   foreach ($result as $record) {
         $output .= "<tr>";
     $output .= "<td>{$record["article"]}</td>";
-    $output .= "<td><a href='like_create.php?user_id={$user_id}&article_id={$record["article_id"]}'>like{$record["cnt"]}</a></td>";
-    $output .= "<td><a href='edit.php?article_id={$record["article_id"]}'>edit</a></td>";
-    $output .= "<td><a href='delete.php?article_id={$record["article_id"]}'>delete</a></td>";
+    $output .= "<td><a href='like_create.php?user_id={$user_id}&article_id={$record["article_id"]}'>いいね：{$record["cnt"]}</a></td>";
+    $output .= "<td><a href='edit.php?article_id={$record["article_id"]}'>記事編集</a></td>";
+    $output .= "<td><a href='delete.php?article_id={$record["article_id"]}'>記事削除</a></td>";
     // 画像出力を追加しよう
     $output .= "<td><img src='{$record["image"]}' height='150px'></td>";
     $output .= "</tr>";
